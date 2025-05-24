@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.virellarent.backend.entities.Reserva;
+import com.virellarent.backend.repositories.PagoRepository;
 import com.virellarent.backend.repositories.ReservaRepository;
 
 import jakarta.transaction.Transactional;
