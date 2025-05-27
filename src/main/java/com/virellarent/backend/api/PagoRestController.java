@@ -24,6 +24,13 @@ public class PagoRestController {
 
     @Autowired
     private PagoService pagoService;
+     
+    //Obtener pagos con reservas
+    @GetMapping("/reserva/{id}")
+    public ResponseEntity<Pago> getPagoConReserva(@PathVariable Long id) {
+        Pago pago = pagoService.getPagoConReserva(id);
+        return ResponseEntity.ok(pago);
+    }
 
     // Crear Pago
     @PostMapping

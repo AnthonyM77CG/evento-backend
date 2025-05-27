@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.virellarent.backend.entities.Pago;
 import com.virellarent.backend.entities.Reserva;
 import com.virellarent.backend.services.ReservaService;
 
@@ -23,6 +24,27 @@ import com.virellarent.backend.services.ReservaService;
 public class ReservaRestController {
     @Autowired
     private ReservaService reservaService;
+
+    //Obtener las reservas de un usuario
+    @GetMapping("/usuario/{idUsuario}")
+    public ResponseEntity<List<Reserva>> getReservasByUsuario(@PathVariable Long idUsuario) {
+        List<Reserva> reservas = reservaService.getReservasByUsuarioId(idUsuario);
+        return ResponseEntity.ok(reservas);
+    }
+
+    //Obtener las reservas por espacio de evento
+    @GetMapping("/espacio/{idEspacioEvento}")
+    public ResponseEntity<List<Reserva>> getReservasByEspacioEvento(@PathVariable Long idEspacioEvento) {
+        List<Reserva> reservas = reservaService.getReservasByEspacioEventoId(idEspacioEvento);
+        return ResponseEntity.ok(reservas);
+    }
+
+    //Obtener las reservas por plan
+    @GetMapping("/plan/{idPlan}")
+    public ResponseEntity<List<Reserva>> getReservasByPlan(@PathVariable Long idPlan) {
+        List<Reserva> reservas = reservaService.getReservasByPlanId(idPlan);
+        return ResponseEntity.ok(reservas);
+    }
 
     // Crear Reserva
     @PostMapping
@@ -59,16 +81,10 @@ public class ReservaRestController {
         return ResponseEntity.noContent().build();
     }
 
-    // Endpoint para eliminar reserva y su pago asociado
-    @DeleteMapping("/completo/{id}") 
-    public ResponseEntity<?> eliminarReservaYPago(@PathVariable Long id) {
-        try {
-            reservaService.eliminarReservaYPago(id);
-            return ResponseEntity.ok().body("Reserva y pago eliminados exitosamente");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Error interno del servidor");
-        }
+    // Transaccional - Endpoint para crear una reserva y un pago en una sola transacción
+    @PostMapping("/con-pago")
+    public ResponseEntity<Reserva> createReservaConPago(@RequestBody Reserva reserva, @RequestBody Pago pago) {
+        Reserva nuevaReserva = reservaService.createReservaConPago(reserva, pago);
+        return ResponseEntity.status(201).body(nuevaReserva);
     }
 }

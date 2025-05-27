@@ -1,12 +1,12 @@
 package com.virellarent.backend.entities;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
+//import java.util.Collection;
 import java.util.List;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.authority.SimpleGrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class Usuario implements UserDetails{
+public class Usuario{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -52,7 +52,7 @@ public class Usuario implements UserDetails{
     @JsonIgnore
     private List<Reserva> reservas;
         
-    @Override
+    /*@Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
     return List.of(new SimpleGrantedAuthority(rol.getNombre()));
 }
@@ -87,4 +87,5 @@ public class Usuario implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
+    */
 }   
