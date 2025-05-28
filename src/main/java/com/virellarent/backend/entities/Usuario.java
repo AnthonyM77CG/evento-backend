@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class Usuario implements UserDetails{
+public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -51,21 +51,20 @@ public class Usuario implements UserDetails{
     @OneToMany(mappedBy = "usuario")
     @JsonIgnore
     private List<Reserva> reservas;
-        
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-    return List.of(new SimpleGrantedAuthority(rol.getNombre()));
-}
+        return List.of(new SimpleGrantedAuthority(rol.getNombre()));
+    }
 
     @Override
     public String getPassword() {
         return contraseña;
     }
 
-
     public String getUsername() {
         return correo;
-        
+
     }
 
     @Override
@@ -87,4 +86,4 @@ public class Usuario implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
-}   
+}

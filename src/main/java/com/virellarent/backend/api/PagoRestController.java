@@ -3,7 +3,6 @@ package com.virellarent.backend.api;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,15 +17,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.virellarent.backend.entities.Pago;
 import com.virellarent.backend.services.PagoService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/api/pagos")
+@RequiredArgsConstructor
 public class PagoRestController {
 
-    @Autowired
-    private PagoService pagoService;
+    private final PagoService pagoService;
+     
+    //Obtener pagos con reservas
+    @GetMapping("/reserva/{id}")
+    public ResponseEntity<Pago> getPagoConReserva(@PathVariable Long id) {
+        Pago pago = pagoService.getPagoConReserva(id);
+        return ResponseEntity.ok(pago);
+    }
 
     // Crear Pago
-    @PostMapping
+    @PostMapping("/agregar")
     public ResponseEntity<Pago> createPago(@RequestBody Pago pago) {
         Pago newPago = pagoService.createPago(pago);
         return new ResponseEntity<>(newPago, HttpStatus.CREATED);
@@ -47,14 +55,14 @@ public class PagoRestController {
     }
 
     // Actualizar Pago
-    @PutMapping("/{id}")
+    @PutMapping("/actualizar/{id}")
     public ResponseEntity<Pago> updatePago(@PathVariable Long id, @RequestBody Pago pagoDetails) {
         Pago updatedPago = pagoService.updatePago(id, pagoDetails);
         return ResponseEntity.ok(updatedPago);
     }
 
     // Eliminar Pago
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> deletePago(@PathVariable Long id) {
         pagoService.deletePago(id);
         return ResponseEntity.noContent().build();

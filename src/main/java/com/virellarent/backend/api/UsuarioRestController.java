@@ -27,7 +27,7 @@ public class UsuarioRestController {
     private final UsuarioService usuarioService;
 
     // Crear Usuario
-    @PostMapping
+    @PostMapping("/agregar")
     public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) {
         Usuario newUsuario = usuarioService.createUsuario(usuario);
         return new ResponseEntity<>(newUsuario, HttpStatus.CREATED);
@@ -48,14 +48,14 @@ public class UsuarioRestController {
     }
 
     // Actualizar Usuario
-    @PutMapping("/{id}")
+    @PutMapping("/actualizar/{id}")
     public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuarioDetails) {
         Usuario updatedUsuario = usuarioService.updateUsuario(id, usuarioDetails);
         return ResponseEntity.ok(updatedUsuario);
     }
 
     // Eliminar Usuario
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> deleteUsuario(@PathVariable Long id) {
         usuarioService.deleteUsuario(id);
         return ResponseEntity.noContent().build();

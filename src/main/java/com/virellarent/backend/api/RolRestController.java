@@ -27,7 +27,7 @@ public class RolRestController {
     private final RolService rolService;
 
     // Crear Rol
-    @PostMapping
+    @PostMapping("/agregar")
     public ResponseEntity<Rol> createRol(@RequestBody Rol rol) {
         Rol newRol = rolService.createRol(rol);
         return new ResponseEntity<>(newRol, HttpStatus.CREATED);
@@ -48,14 +48,14 @@ public class RolRestController {
     }
 
     // Actualizar Rol
-    @PutMapping("/{id}")
+    @PutMapping("/actualizar/{id}")
     public ResponseEntity<Rol> updateRol(@PathVariable Long id, @RequestBody Rol rolDetails) {
         Rol updatedRol = rolService.updateRol(id, rolDetails);
         return ResponseEntity.ok(updatedRol);
     }
 
     // Eliminar Rol
-    @DeleteMapping("/{id}")
+    @DeleteMapping("eliminar/{id}")
     public ResponseEntity<Void> deleteRol(@PathVariable Long id) {
         rolService.deleteRol(id);
         return ResponseEntity.noContent().build();

@@ -16,6 +16,10 @@ public class PagoService {
 
     private final PagoRepository pagoRepository;
 
+    public Pago getPagoConReserva(Long idPago) {
+        return pagoRepository.findById(idPago).orElseThrow(() -> new RuntimeException("Pago no encontrado"));
+    }
+
     // Crear Pago
     public Pago createPago(Pago pago) {
         return pagoRepository.save(pago);
