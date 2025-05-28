@@ -1,12 +1,12 @@
 package com.virellarent.backend.entities;
 
 import java.time.LocalDateTime;
-//import java.util.Collection;
+import java.util.Collection;
 import java.util.List;
 
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.authority.SimpleGrantedAuthority;
-//import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class Usuario{
+public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -51,21 +51,20 @@ public class Usuario{
     @OneToMany(mappedBy = "usuario")
     @JsonIgnore
     private List<Reserva> reservas;
-        
-    /*@Override
+
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-    return List.of(new SimpleGrantedAuthority(rol.getNombre()));
-}
+        return List.of(new SimpleGrantedAuthority(rol.getNombre()));
+    }
 
     @Override
     public String getPassword() {
         return contraseña;
     }
 
-
     public String getUsername() {
         return correo;
-        
+
     }
 
     @Override
@@ -87,5 +86,4 @@ public class Usuario{
     public boolean isEnabled() {
         return true;
     }
-    */
-}   
+}
