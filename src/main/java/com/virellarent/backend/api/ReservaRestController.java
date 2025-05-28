@@ -3,7 +3,6 @@ package com.virellarent.backend.api;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,11 +18,14 @@ import com.virellarent.backend.entities.Pago;
 import com.virellarent.backend.entities.Reserva;
 import com.virellarent.backend.services.ReservaService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/api/reservas")
+@RequiredArgsConstructor
 public class ReservaRestController {
-    @Autowired
-    private ReservaService reservaService;
+    
+    private final ReservaService reservaService;
 
     //Obtener las reservas de un usuario
     @GetMapping("/usuario/{idUsuario}")
@@ -68,14 +70,14 @@ public class ReservaRestController {
     }
 
     // Actualizar Reserva
-    @PutMapping("/{id}")
+    @PutMapping("/actualizar/{id}")
     public ResponseEntity<Reserva> updateReserva(@PathVariable Long id, @RequestBody Reserva reservaDetails) {
         Reserva updatedReserva = reservaService.updateReserva(id, reservaDetails);
         return ResponseEntity.ok(updatedReserva);
     }
 
     // Endpoint para eliminar Reserva
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> deleteReserva(@PathVariable Long id) {
         reservaService.deleteReserva(id);
         return ResponseEntity.noContent().build();

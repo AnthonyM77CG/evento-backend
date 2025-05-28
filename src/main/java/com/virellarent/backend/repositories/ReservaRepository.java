@@ -16,7 +16,7 @@ public interface ReservaRepository extends JpaRepository <Reserva, Long>{
     List<Reserva> findByUsuarioId(@Param("idUsuario") Long idUsuario);
 
     //Obtener reservas por espacio de evento
-    @Query("SELECT r FROM Reserva r WHERE r.espacioEvento.id = :idEspacioEvento")
+    @Query("SELECT r FROM Reserva r WHERE r.espacio.id = :idEspacioEvento")
     List<Reserva> findByEspacioEventoId(@Param("idEspacioEvento") Long idEspacioEvento);
 
     // Obtener reservas por plan

@@ -3,7 +3,6 @@ package com.virellarent.backend.api;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,15 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.virellarent.backend.entities.Tarifa;
 import com.virellarent.backend.services.TarifaService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/api/tarifas")
+@RequiredArgsConstructor
 public class TarifaRestController {
 
-    @Autowired
-    private TarifaService tarifaService;
+    private final TarifaService tarifaService;
 
     // Crear Tarifa
-    @PostMapping
+    @PostMapping("/agregar")
     public ResponseEntity<Tarifa> createTarifa(@RequestBody Tarifa tarifa) {
         Tarifa newTarifa = tarifaService.createTarifa(tarifa);
         return new ResponseEntity<>(newTarifa, HttpStatus.CREATED);
@@ -47,14 +48,14 @@ public class TarifaRestController {
     }
 
     // Actualizar Tarifa
-    @PutMapping("/{id}")
+    @PutMapping("/actualizar/{id}")
     public ResponseEntity<Tarifa> updateTarifa(@PathVariable Long id, @RequestBody Tarifa tarifaDetails) {
         Tarifa updatedTarifa = tarifaService.updateTarifa(id, tarifaDetails);
         return ResponseEntity.ok(updatedTarifa);
     }
 
     // Eliminar Tarifa
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> deleteTarifa(@PathVariable Long id) {
         tarifaService.deleteTarifa(id);
         return ResponseEntity.noContent().build();

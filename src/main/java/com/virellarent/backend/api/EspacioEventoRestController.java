@@ -27,7 +27,7 @@ public class EspacioEventoRestController {
     private final EspacioEventoService espacioEventoService;
 
     // Crear Espacio de Evento
-    @PostMapping
+    @PostMapping("/agregar")
     public ResponseEntity<EspacioEvento> createEspacioEvento(@RequestBody EspacioEvento espacioEvento) {
         EspacioEvento newEspacio = espacioEventoService.createEspacioEvento(espacioEvento);
         return new ResponseEntity<>(newEspacio, HttpStatus.CREATED);
@@ -48,14 +48,14 @@ public class EspacioEventoRestController {
     }
 
     // Actualizar Espacio de Evento
-    @PutMapping("/{id}")
+    @PutMapping("/actualizar/{id}")
     public ResponseEntity<EspacioEvento> updateEspacioEvento(@PathVariable Long id, @RequestBody EspacioEvento espacioEventoDetails) {
         EspacioEvento updatedEspacio = espacioEventoService.updateEspacioEvento(id, espacioEventoDetails);
         return ResponseEntity.ok(updatedEspacio);
     }
 
     // Eliminar Espacio de Evento
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> deleteEspacioEvento(@PathVariable Long id) {
         espacioEventoService.deleteEspacioEvento(id);
         return ResponseEntity.noContent().build();
