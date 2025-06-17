@@ -1,6 +1,6 @@
-package com.virella.backend.repositories;
+package com.virellarent.backend.repositories;
 
-import com.virella.backend.models.EspacioEvento;
+import com.virellarent.backend.models.EspacioEvento;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
