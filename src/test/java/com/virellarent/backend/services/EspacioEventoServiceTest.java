@@ -1,6 +1,6 @@
 package com.virellarent.backend.services;
 
-import com.virellarent.backend.models.EspacioEvento;
+import com.virellarent.backend.entities.EspacioEvento;
 import com.virellarent.backend.repositories.EspacioEventoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
