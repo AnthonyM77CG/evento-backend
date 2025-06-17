@@ -1,7 +1,7 @@
-package com.virella.backend.controllers;
+package com.virellarent.backend.controllers;
 
-import com.virella.backend.models.EspacioEvento;
-import com.virella.backend.services.EspacioEventoService;
+import com.virellarent.backend.models.EspacioEvento;
+import com.virellarent.backend.services.EspacioEventoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
