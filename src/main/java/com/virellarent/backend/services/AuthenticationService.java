@@ -1,6 +1,9 @@
 package com.virellarent.backend.services;
 
 import lombok.RequiredArgsConstructor;
+
+import java.time.LocalDateTime;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,7 +36,7 @@ public class AuthenticationService {
                                 .correo(request.email())
                                 .contraseña(passwordEncoder.encode(request.password()))
                                 .rol(rolUser)
-                                .creadoEn(request.createIn())
+                                .creadoEn(LocalDateTime.now())
                                 .build();
                 userRepository.save(user);
                 var jwtToken = jwtService.generateToken(user);
