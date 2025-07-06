@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.virellarent.backend.config.JwtConfig;
+import com.virellarent.backend.entities.Usuario;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -28,6 +29,10 @@ public class JwtService {
     public String generateToken(
             Map<String, Object> extraClaims,
             UserDetails userDetails) {
+        if (userDetails instanceof Usuario) {
+            Usuario user = (Usuario) userDetails;
+            extraClaims.put("role", user.getRol().getNombre());
+        }
         return buildToken(extraClaims, userDetails, jwtConfig.getTokenExpirationInMillis());
     }
 
@@ -86,9 +91,8 @@ public class JwtService {
         System.out.println("Token creado: " + claims.getIssuedAt());
         System.out.println("Token expira: " + claims.getExpiration());
         System.out.println("Fecha actual: " + new Date());
-        System.out.println("Milisegundos restantes: " + 
+        System.out.println("Milisegundos restantes: " +
                 (claims.getExpiration().getTime() - System.currentTimeMillis()));
     }
-
 
 }
