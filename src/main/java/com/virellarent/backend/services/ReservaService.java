@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-
-import com.virellarent.backend.entities.Pago;
 import com.virellarent.backend.entities.Reserva;
 import com.virellarent.backend.repositories.PagoRepository;
 import com.virellarent.backend.repositories.ReservaRepository;
@@ -68,16 +66,17 @@ public class ReservaService {
 
     //Transaccion
     @Transactional
-    public Reserva createReservaConPago(Reserva reserva, Pago pago) {
-        // Guardar la reserva
-        Reserva nuevaReserva = reservaRepository.save(reserva);
-        
-        // Asignar la reserva al pago
-        pago.setReserva(nuevaReserva);
-        
-        // Guardar el pago
-        pagoRepository.save(pago);
-        
-        return nuevaReserva;
+    public void eliminarReservaYPago(Long reservaId) {
+        try {
+            Reserva reserva = reservaRepository.findById(reservaId)
+                    .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+
+            pagoRepository.delete(reserva.getPago());
+
+            reservaRepository.delete(reserva);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al eliminar reserva y pago: " + e.getMessage());
+        }
     }
 }
