@@ -53,6 +53,7 @@ public class Usuario implements UserDetails {
     private List<Reserva> reservas;
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(rol.getNombre()));
     }

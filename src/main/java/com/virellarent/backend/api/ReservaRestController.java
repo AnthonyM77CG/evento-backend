@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.virellarent.backend.entities.Pago;
 import com.virellarent.backend.entities.Reserva;
 import com.virellarent.backend.services.ReservaService;
 
@@ -49,7 +48,7 @@ public class ReservaRestController {
     }
 
     // Crear Reserva
-    @PostMapping
+    @PostMapping("/agregar")
     public ResponseEntity<Reserva> createReserva(@RequestBody Reserva reserva) {
         Reserva newReserva = reservaService.createReserva(reserva);
         return new ResponseEntity<>(newReserva, HttpStatus.CREATED);
@@ -83,10 +82,16 @@ public class ReservaRestController {
         return ResponseEntity.noContent().build();
     }
 
-    // Transaccional - Endpoint para crear una reserva y un pago en una sola transacción
-    @PostMapping("/con-pago")
-    public ResponseEntity<Reserva> createReservaConPago(@RequestBody Reserva reserva, @RequestBody Pago pago) {
-        Reserva nuevaReserva = reservaService.createReservaConPago(reserva, pago);
-        return ResponseEntity.status(201).body(nuevaReserva);
+     // Transaccional - Endpoint para eliminar reserva y su pago asociado
+    @DeleteMapping("/eliminar/con-pago/{id}") 
+    public ResponseEntity<?> eliminarReservaYPago(@PathVariable Long id) {
+        try {
+            reservaService.eliminarReservaYPago(id);
+            return ResponseEntity.ok().body("Reserva y pago eliminados exitosamente");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Error interno del servidor");
+        }
     }
 }

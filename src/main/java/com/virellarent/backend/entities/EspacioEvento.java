@@ -2,6 +2,8 @@ package com.virellarent.backend.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,8 +35,10 @@ public class EspacioEvento {
     private int aforoMaximo;
 
     @OneToMany(mappedBy = "espacio")
+    @JsonIgnore
     private List<Reserva> reservas;
 
     @OneToMany(mappedBy = "espacio")
+    @JsonIgnore
     private List<Tarifa> tarifas;
 }

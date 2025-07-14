@@ -49,7 +49,7 @@ public class Reserva {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
-    @JsonIgnoreProperties({"reservas", "rol"})
+    @JsonIgnoreProperties({"reservas"})
     private Usuario usuario;
 
     @ManyToOne
