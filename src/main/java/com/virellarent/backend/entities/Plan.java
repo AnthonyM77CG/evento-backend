@@ -1,9 +1,11 @@
 package com.virellarent.backend.entities;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,11 +32,10 @@ public class Plan {
     @Lob
     private String descripcion;
 
-    @OneToMany(mappedBy = "plan")
-    @JsonIgnore
-    private List<Reserva> reservas;
+    @Column(nullable = false)
+    private BigDecimal precio;
 
     @OneToMany(mappedBy = "plan")
     @JsonIgnore
-    private List<Tarifa> tarifas;
+    private List<Reserva> reservas;
 }

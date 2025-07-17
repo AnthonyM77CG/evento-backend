@@ -37,8 +37,4 @@ public class EspacioEvento {
     @OneToMany(mappedBy = "espacio")
     @JsonIgnore
     private List<Reserva> reservas;
-
-    @OneToMany(mappedBy = "espacio")
-    @JsonIgnore
-    private List<Tarifa> tarifas;
 }

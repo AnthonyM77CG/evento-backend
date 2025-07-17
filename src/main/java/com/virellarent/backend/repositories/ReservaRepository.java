@@ -8,14 +8,14 @@ import org.springframework.data.repository.query.Param;
 
 import com.virellarent.backend.entities.Reserva;
 
-public interface ReservaRepository extends JpaRepository <Reserva, Long>{
-    //List<Reserva> findByUsuarioId(Long idUsuario);
+public interface ReservaRepository extends JpaRepository<Reserva, Long> {
+    // List<Reserva> findByUsuarioId(Long idUsuario);
 
-    //Obtener reservas por usuario
+    // Obtener reservas por usuario
     @Query("SELECT r FROM Reserva r WHERE r.usuario.id = :idUsuario")
     List<Reserva> findByUsuarioId(@Param("idUsuario") Long idUsuario);
 
-    //Obtener reservas por espacio de evento
+    // Obtener reservas por espacio de evento
     @Query("SELECT r FROM Reserva r WHERE r.espacio.id = :idEspacioEvento")
     List<Reserva> findByEspacioEventoId(@Param("idEspacioEvento") Long idEspacioEvento);
 

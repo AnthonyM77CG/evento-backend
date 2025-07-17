@@ -54,7 +54,7 @@ public class Reserva {
 
     @ManyToOne
     @JoinColumn(name = "id_espacio")
-    @JsonIgnoreProperties({"reservas", "tarifas"})
+    @JsonIgnoreProperties({"reservas"})
     private EspacioEvento espacio;
 
     @ManyToOne
