@@ -1,0 +1,4 @@
+
+CREATE USER IF NOT EXISTS 'grupo2'@'localhost' IDENTIFIED BY '1234';
+GRANT ALL PRIVILEGES ON `virella2`.* TO 'grupo2'@'localhost';
+FLUSH PRIVILEGES;
