@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.virellarent.backend.entities.Pago;
 
-public interface PagoRepository extends JpaRepository <Pago, Long> {
+public interface PagoRepository extends JpaRepository<Pago, Long> {
     List<Pago> findByReservaId(Long idReserva);
 }

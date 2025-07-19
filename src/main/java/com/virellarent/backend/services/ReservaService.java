@@ -1,14 +1,13 @@
 package com.virellarent.backend.services;
 
+import com.virellarent.backend.entities.Pago;
+import com.virellarent.backend.entities.Reserva;
+import com.virellarent.backend.repositories.ReservaRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
-import com.virellarent.backend.entities.Reserva;
-import com.virellarent.backend.repositories.PagoRepository;
-import com.virellarent.backend.repositories.ReservaRepository;
-
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -16,7 +15,21 @@ import lombok.RequiredArgsConstructor;
 public class ReservaService {
 
     private final ReservaRepository reservaRepository;
-    private final PagoRepository pagoRepository;
+    private final PagoService pagoService;
+
+    @Transactional
+    public Reserva createReservaYPago(Reserva reserva, Pago pago) {
+        // Crear la reserva
+        Reserva nuevaReserva = reservaRepository.save(reserva);
+        
+        // Asociar la reserva al pago
+        pago.setReserva(nuevaReserva);
+        
+        // Crear el pago
+        pagoService.createPago(pago);
+
+        return nuevaReserva;
+    }
 
     public Reserva createReserva(Reserva reserva) {
         return reservaRepository.save(reserva);
@@ -65,7 +78,6 @@ public class ReservaService {
             Reserva reserva = reservaRepository.findById(reservaId)
                     .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
 
-            pagoRepository.delete(reserva.getPago());
             reservaRepository.delete(reserva);
 
         } catch (Exception e) {
