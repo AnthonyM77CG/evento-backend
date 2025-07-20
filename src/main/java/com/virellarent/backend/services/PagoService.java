@@ -6,9 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.virellarent.backend.entities.Pago;
-import com.virellarent.backend.entities.Reserva;
 import com.virellarent.backend.repositories.PagoRepository;
-import com.virellarent.backend.repositories.ReservaRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,17 +15,8 @@ import lombok.RequiredArgsConstructor;
 public class PagoService {
 
     private final PagoRepository pagoRepository;
-    private final ReservaRepository reservaRepository; // Agregado para buscar la reserva
 
     public Pago createPago(Pago pago) {
-        // Buscar la reserva desde su ID
-        Reserva reserva = reservaRepository.findById(pago.getReserva().getId())
-                .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
-        
-        // Asociar la reserva al pago
-        pago.setReserva(reserva);
-
-        // Guardar el pago en la base de datos
         return pagoRepository.save(pago);
     }
 
@@ -49,7 +38,8 @@ public class PagoService {
                 .orElseThrow(() -> new RuntimeException("Pago no encontrado"));
         pago.setMonto(pagoDetails.getMonto());
         pago.setMetodoPago(pagoDetails.getMetodoPago());
-        pago.setEstadoPago(pagoDetails.getEstadoPago());
+        pago.setFechaPago(pagoDetails.getFechaPago());
+        pago.setReserva(pagoDetails.getReserva());
         return pagoRepository.save(pago);
     }
 

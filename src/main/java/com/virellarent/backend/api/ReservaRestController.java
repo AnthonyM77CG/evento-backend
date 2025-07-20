@@ -1,8 +1,6 @@
 package com.virellarent.backend.api;
 
-import com.virellarent.backend.entities.Pago;
 import com.virellarent.backend.entities.Reserva;
-import com.virellarent.backend.services.PagoService;
 import com.virellarent.backend.services.ReservaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 public class ReservaRestController {
 
     private final ReservaService reservaService;
-    private final PagoService pagoService;  // Inyectar PagoService
 
     // Método para crear solo la reserva
     @PostMapping("/agregar")
@@ -27,18 +24,6 @@ public class ReservaRestController {
             Reserva nuevaReserva = reservaService.createReserva(reserva);
             // Devolver la reserva con el ID generado
             return new ResponseEntity<>(nuevaReserva, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
-
-    // Método para crear el pago asociado a la reserva
-    @PostMapping("/agregar-pago")
-    public ResponseEntity<Pago> createPago(@RequestBody Pago pago) {
-        try {
-            // Crear el pago
-            Pago nuevoPago = pagoService.createPago(pago);  // Usar PagoService
-            return new ResponseEntity<>(nuevoPago, HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
@@ -81,15 +66,4 @@ public class ReservaRestController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/eliminar/con-pago/{id}")
-    public ResponseEntity<?> eliminarReservaYPago(@PathVariable Long id) {
-        try {
-            reservaService.eliminarReservaYPago(id);
-            return ResponseEntity.ok().body("Reserva y pago eliminados exitosamente");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Error interno del servidor");
-        }
-    }
 }
