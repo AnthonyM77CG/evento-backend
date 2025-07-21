@@ -2,12 +2,11 @@ package com.virellarent.backend.api;
 
 import com.virellarent.backend.entities.Reserva;
 import com.virellarent.backend.services.ReservaService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/reservas")
@@ -16,13 +15,16 @@ public class ReservaRestController {
 
     private final ReservaService reservaService;
 
-    // Método para crear solo la reserva
+    @GetMapping
+    public ResponseEntity<List<Reserva>> getAllReservas() {
+        List<Reserva> reservas = reservaService.getAllReservas();
+        return ResponseEntity.ok(reservas);
+    }
+
     @PostMapping("/agregar")
     public ResponseEntity<Reserva> createReserva(@RequestBody Reserva reserva) {
         try {
-            // Crear la reserva
             Reserva nuevaReserva = reservaService.createReserva(reserva);
-            // Devolver la reserva con el ID generado
             return new ResponseEntity<>(nuevaReserva, HttpStatus.CREATED);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

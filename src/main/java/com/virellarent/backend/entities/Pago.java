@@ -32,7 +32,7 @@ public class Pago {
     @Column(name = "fecha_pago")
     private LocalDateTime fechaPago;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_reserva")
     @JsonIgnoreProperties("pagos")
     private Reserva reserva;
