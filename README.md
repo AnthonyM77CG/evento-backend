@@ -5,7 +5,7 @@ Este es el backend de VirellaRent para gestión de eventos, construido con Sprin
 ## Tecnologías
 
 - Java 17
-- Spring Boot 3
+- Spring Boot
 - Spring Security con JWT
 - JPA / Hibernate
 - MySQL Workbench
